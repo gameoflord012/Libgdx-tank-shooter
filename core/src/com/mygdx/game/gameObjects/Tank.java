@@ -15,15 +15,27 @@ public class Tank extends GameEntity
     Body body;
     World world;
 
-    float fireRateInSecond = 0.1f;
-    float elapsedFireRateTime = 2;
-
 
     public Tank(World world)
     {
         this.world = world;
         CreateBodies();
 
+        Gdx.input.setInputProcessor(new InputAdapter()
+        {
+            @Override
+            public boolean keyDown(int keycode) {
+                if(keycode == Input.Keys.A)
+                {
+                    Bullet bullet = new Bullet(
+                        Tank.this.world,
+                        body.getWorldPoint(new Vector2(0, 15)),
+                        body.getAngle());
+                }
+
+                return true;
+            }
+        });
     }
     private void CreateBodies() {
         BodyDef dynamic = new BodyDef();
@@ -42,8 +54,6 @@ public class Tank extends GameEntity
         fixture.shape = shape;
         body.createFixture(fixture);
 
-        body.setAngularDamping(5f);
-
         shape.dispose();
     }
 
@@ -52,28 +62,14 @@ public class Tank extends GameEntity
     {
         if(Gdx.input.isKeyPressed(Input.Keys.A))
         {
-            body.setAngularVelocity(2);
+            body.setAngularVelocity(3.5f);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.S))
+        else
         {
-            body.setAngularVelocity(-2);
+            body.setAngularVelocity(-3);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.D))
-        {
-            if(fireRateInSecond < elapsedFireRateTime)
-            {
-                Bullet bullet = new Bullet(
-                        this.world,
-                        body.getWorldPoint(new Vector2(0, 15)),
-                        body.getAngle());
 
-
-                elapsedFireRateTime = 0;
-            }
-        }
         body.setLinearVelocity(body.getWorldVector(new Vector2(0, 10)));
-
-        elapsedFireRateTime += delta;
     }
 
     @Override
