@@ -1,6 +1,5 @@
 package com.mygdx.game.gameObjects.target;
 
-import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.WorldLisenerRegister;
 
 import java.util.Stack;
@@ -10,7 +9,7 @@ public class TargetPoolFactory
     WorldLisenerRegister world;
     int size = 2;
 
-    Stack<TargetPoolObject> pool = new Stack<TargetPoolObject>();
+    Stack<TargetPoolObject> poolObjects = new Stack<TargetPoolObject>();
 
     public TargetPoolFactory(WorldLisenerRegister world)
     {
@@ -21,18 +20,16 @@ public class TargetPoolFactory
     {
         TargetPoolObject poolObject;
 
-        if(pool.isEmpty())
+        if(poolObjects.isEmpty())
         {
             poolObject = new TargetPoolObject(world, this);
-
         }
         else
         {
-            poolObject = pool.pop();
-
+            poolObject = poolObjects.pop();
         }
 
-        poolObject.wakeyWakeyEggsAndBakey(px, py);
+          poolObject.wakeyWakeyEggsAndBakey(px, py);
 
         return poolObject;
     }
@@ -41,13 +38,13 @@ public class TargetPoolFactory
     {
         poolObject.sleep();
 
-        if(pool.size() < size)
+        if(poolObjects.size() < size)
         {
-            pool.add(poolObject);
+            poolObjects.add(poolObject);
         }
         else
         {
-            pool.remove(poolObject);
+            poolObject.removeFromPool();
         }
     }
 }

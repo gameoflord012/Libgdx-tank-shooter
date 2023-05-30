@@ -11,6 +11,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.WorldLisenerRegister;
 import com.mygdx.game.gameObjects.GameEntity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Target extends GameEntity
 {
     public abstract static class TargetEvent
@@ -18,18 +21,28 @@ public class Target extends GameEntity
         public abstract void onTargetGoHeaven();
     }
 
-    public TargetEvent lisener;
+    private Set<TargetEvent> liseners = new HashSet<TargetEvent>();
+
+    public void addTargetEventLisener (TargetEvent lisener)
+    {
+        liseners.add(lisener);
+    }
 
     public Body body;
     WorldLisenerRegister worldLisenerRegister;
-    boolean alive;
+    private boolean active;
+
+    public void setActive(boolean active)
+    {
+        this.active = active;
+    }
 
     public Target(WorldLisenerRegister worldLisenerRegister)
     {
         this.worldLisenerRegister = worldLisenerRegister;
         CreateBodies();
 
-        alive = true;
+        active = true;
 
         worldLisenerRegister.addContactLisener(new ContactListener() {
             @Override
@@ -38,7 +51,7 @@ public class Target extends GameEntity
                         contact.getFixtureA().getBody().getUserData()== Target.this||
                         contact.getFixtureB().getBody().getUserData() == Target.this)
                 {
-                    alive = false;
+                    active = false;
                 }
             }
 
@@ -69,7 +82,7 @@ public class Target extends GameEntity
         dynamic.type = BodyDef.BodyType.StaticBody;
         dynamic.position.set(0, 0);
 
-        body = worldLisenerRegister.getWorld().createBody(dynamic);
+        this.body = worldLisenerRegister.getWorld().createBody(dynamic);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(5,5);
@@ -85,12 +98,31 @@ public class Target extends GameEntity
     @Override
     public void update(float delta)
     {
-        if(!alive && body.isActive())
+        if(active && !body.isActive())
+        {
+            body.setActive(true);
+        }
+
+        if(!active && body.isActive())
         {
             body.setActive(false);
 
-            if(lisener != null)
-                lisener.onTargetGoHeaven();
+            for(TargetEvent lisener : liseners)
+            {
+                if(lisener != null)
+                    lisener.onTargetGoHeaven();
+            }
+        }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+
+        if(body != null)
+        {
+            worldLisenerRegister.getWorld().destroyBody(body);
+            body = null;
         }
     }
 }

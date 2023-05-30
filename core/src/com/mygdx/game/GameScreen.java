@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,7 +11,9 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.gameObjects.GameEntity;
 import com.mygdx.game.gameObjects.Tank;
+import com.mygdx.game.gameObjects.target.Target;
 import com.mygdx.game.gameObjects.target.TargetPoolFactory;
+import com.mygdx.game.gameObjects.target.TargetPoolObject;
 
 public class GameScreen extends ScreenAdapter {
     private GameClass game;
@@ -29,6 +33,58 @@ public class GameScreen extends ScreenAdapter {
         worldLisenerRegister = new WorldLisenerRegister(world);
         sound = Gdx.audio.newSound(Gdx.files.internal("dnx-116856.mp3"));
         targetPool = new TargetPoolFactory(worldLisenerRegister);
+
+        InputLisenerRegister.getInstance().addInputProcessor(new InputProcessor() {
+            @Override
+            public boolean keyDown(int keycode) {
+                if(keycode == Input.Keys.SPACE)
+                {
+                    TargetPoolObject target = targetPool.getPoolObject(
+                            Utility.getInstance().randomInt(-140, 140),
+                            Utility.getInstance().randomInt(-100, 100)
+                    );
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean keyUp(int keycode) {
+                return false;
+            }
+
+            @Override
+            public boolean keyTyped(char character) {
+                return false;
+            }
+
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                return false;
+            }
+
+            @Override
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                return false;
+            }
+
+            @Override
+            public boolean touchDragged(int screenX, int screenY, int pointer) {
+                return false;
+            }
+
+            @Override
+            public boolean mouseMoved(int screenX, int screenY) {
+                return false;
+            }
+
+            @Override
+            public boolean scrolled(float amountX, float amountY) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -36,17 +92,16 @@ public class GameScreen extends ScreenAdapter {
     {
         /*long id = sound.play(1);
         sound.setLooping(id,true);*/
-
         CreateLevel();
     }
 
     private void CreateLevel() {
-        tank = new Tank(world);
+        new Tank(world, Input.Keys.A);
+        new Tank(world, Input.Keys.J);
 
         targetPool.getPoolObject(50, 50);
         targetPool.getPoolObject(-50, -50);
         targetPool.getPoolObject(-50, 50);
-
     }
 
     @Override
@@ -57,10 +112,7 @@ public class GameScreen extends ScreenAdapter {
 
         world.step(delta, 3, 3);
 
-        for (GameEntity entity: GameEntity.list)
-        {
-            entity.update(delta);
-        }
+        GameEntity.updateAll(delta);
 
         debugRenderer.render(world, game.camera.combined);
     }
@@ -73,11 +125,9 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        for (GameEntity entity: GameEntity.list)
-        {
-            entity.dispose();
-        }
 
         sound.dispose();
     }
+
+
 }

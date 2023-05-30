@@ -9,31 +9,50 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.InputLisenerRegister;
 
 public class Tank extends GameEntity
 {
     Body body;
     World world;
+    int controlKey;
 
-
-    public Tank(World world)
+    public Tank(World world, int controlKey)
     {
         this.world = world;
         CreateBodies();
 
-        Gdx.input.setInputProcessor(new InputAdapter()
+        this.controlKey = controlKey;
+
+        InputLisenerRegister.getInstance().addInputProcessor(new InputAdapter()
         {
             @Override
             public boolean keyDown(int keycode) {
-                if(keycode == Input.Keys.A)
+                if(keycode == Tank.this.controlKey)
                 {
+                    body.setAngularVelocity(3.5f);
+
                     Bullet bullet = new Bullet(
                         Tank.this.world,
                         body.getWorldPoint(new Vector2(0, 15)),
                         body.getAngle());
+
+                    return true;
                 }
 
-                return true;
+                return false;
+            }
+
+            @Override
+            public boolean keyUp(int keycode) {
+                if(keycode == Tank.this.controlKey)
+                {
+                    body.setAngularVelocity(-3.5f);
+
+                    return true;
+                }
+
+                return false;
             }
         });
     }
@@ -55,26 +74,13 @@ public class Tank extends GameEntity
         body.createFixture(fixture);
 
         shape.dispose();
+
+        body.setAngularVelocity(-3.5f);
     }
 
     @Override
     public void update(float delta)
     {
-        if(Gdx.input.isKeyPressed(Input.Keys.A))
-        {
-            body.setAngularVelocity(3.5f);
-        }
-        else
-        {
-            body.setAngularVelocity(-3);;
-        }
-
         body.setLinearVelocity(body.getWorldVector(new Vector2(0, 30)));
-    }
-
-    @Override
-    public void dispose()
-    {
-        Gdx.input.setInputProcessor(null);
     }
 }

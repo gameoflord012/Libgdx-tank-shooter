@@ -1,37 +1,44 @@
 package com.mygdx.game.gameObjects.target;
 
-import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.WorldLisenerRegister;
 
 public class TargetPoolObject
 {
     private Target target;
     private TargetPoolFactory factory;
+    WorldLisenerRegister world;
 
     public TargetPoolObject(WorldLisenerRegister world, TargetPoolFactory factory)
     {
+        this.world = world;
         target = new Target(world);
         this.factory = factory;
 
-        target.lisener = new Target.TargetEvent()
+        target.addTargetEventLisener(new Target.TargetEvent()
         {
             @Override
             public void onTargetGoHeaven()
             {
                 returnToPool();
             }
-        };
+        });
     }
 
     public void wakeyWakeyEggsAndBakey(float px, float py)
     {
-        target.body.setActive(true);
+        target.setActive(true);
         target.setPosition(px, py);
     }
 
     public void sleep()
     {
-        target.body.setActive(false);
+        target.setActive(false);
+    }
+
+    public void removeFromPool()
+    {
+        factory.poolObjects.remove(this);
+        target.dispose();
     }
 
     public void returnToPool()
