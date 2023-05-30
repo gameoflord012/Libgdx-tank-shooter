@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -20,6 +21,19 @@ public class GameClass extends Game {
 
 	public World world;
 
+	private static GameClass instance;
+
+	private GameClass(){}
+
+	public static GameClass getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new GameClass();
+		}
+		return instance;
+	}
+
 	@Override
 	public void create () {
 		camera = new OrthographicCamera(320, 240);
@@ -28,7 +42,12 @@ public class GameClass extends Game {
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
 
-		setScreen(new TitleScreen(this));
+		setScreen(new GameScreen(this));
+	}
+
+	public boolean isPointScreen(float vx, float vy)
+	{
+		return !(vx < -160 || vx > 160 || vy < -120 || vy > 120);
 	}
 
 

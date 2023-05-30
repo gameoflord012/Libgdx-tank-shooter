@@ -9,7 +9,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("TankShooter");
-		new Lwjgl3Application(new GameClass(), config);
+		config.setTitle("Tank Shooter");
+		new Lwjgl3Application(GameClass.getInstance(), config);
 	}
 }

@@ -1,4 +1,4 @@
-package com.mygdx.game.gameObjects;
+package com.mygdx.game.gameObjects.target;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -8,28 +8,35 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.WorldLisenerRegister;
+import com.mygdx.game.gameObjects.GameEntity;
 
 public class Target extends GameEntity
 {
-    public Body body;
-    World world;
+    public abstract static class TargetEvent
+    {
+        public abstract void onTargetGoHeaven();
+    }
 
+    public TargetEvent lisener;
+
+    public Body body;
+    WorldLisenerRegister worldLisenerRegister;
     boolean alive;
 
-    public Target(final World world)
+    public Target(WorldLisenerRegister worldLisenerRegister)
     {
-        this.world = world;
+        this.worldLisenerRegister = worldLisenerRegister;
         CreateBodies();
 
         alive = true;
 
-        world.setContactListener(new ContactListener() {
+        worldLisenerRegister.addContactLisener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
                 if(
-                        contact.getFixtureA().getBody().getUserData() == "Target.class" ||
-                        contact.getFixtureB().getBody().getUserData() == "Target.class")
+                        contact.getFixtureA().getBody().getUserData()== Target.this||
+                        contact.getFixtureB().getBody().getUserData() == Target.this)
                 {
                     alive = false;
                 }
@@ -52,12 +59,17 @@ public class Target extends GameEntity
         });
     }
 
+    public void setPosition(float px, float py)
+    {
+        body.setTransform(px, py, 0);
+    }
+
     private void CreateBodies() {
         BodyDef dynamic = new BodyDef();
         dynamic.type = BodyDef.BodyType.StaticBody;
         dynamic.position.set(0, 0);
 
-        body = world.createBody(dynamic);
+        body = worldLisenerRegister.getWorld().createBody(dynamic);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(5,5);
@@ -65,16 +77,20 @@ public class Target extends GameEntity
         fixture.shape = shape;
         body.createFixture(fixture);
 
-        body.setUserData("Target.class");
+        body.setUserData(this);
 
         shape.dispose();
     }
 
     @Override
-    public void update(float delta) {
+    public void update(float delta)
+    {
         if(!alive && body.isActive())
         {
             body.setActive(false);
+
+            if(lisener != null)
+                lisener.onTargetGoHeaven();
         }
     }
 }

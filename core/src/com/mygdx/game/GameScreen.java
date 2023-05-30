@@ -9,45 +9,44 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.gameObjects.GameEntity;
 import com.mygdx.game.gameObjects.Tank;
-import com.mygdx.game.gameObjects.Target;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.mygdx.game.gameObjects.target.TargetPoolFactory;
 
 public class GameScreen extends ScreenAdapter {
     private GameClass game;
     private Box2DDebugRenderer debugRenderer;
+    WorldLisenerRegister worldLisenerRegister;
     World world;
     Tank tank;
     Sound sound;
 
-    List<GameEntity> entities;
+    TargetPoolFactory targetPool;
 
     public GameScreen(GameClass game)
     {
         this.game = game;
         debugRenderer = new Box2DDebugRenderer();
-        entities = new ArrayList<GameEntity>();
         world = new World(new Vector2(0, 0), true);
+        worldLisenerRegister = new WorldLisenerRegister(world);
+        sound = Gdx.audio.newSound(Gdx.files.internal("dnx-116856.mp3"));
+        targetPool = new TargetPoolFactory(worldLisenerRegister);
     }
 
     @Override
     public void show()
     {
-        sound = Gdx.audio.newSound(Gdx.files.internal("dnx-116856.mp3"));
-        long id = sound.play(1);
-        sound.setLooping(id,true);
+        /*long id = sound.play(1);
+        sound.setLooping(id,true);*/
 
         CreateLevel();
     }
 
     private void CreateLevel() {
         tank = new Tank(world);
-        entities.add(tank);
 
-        Target target = new Target(world);
-        target.body.setTransform(50, 50, 0);
-        entities.add(target);
+        targetPool.getPoolObject(50, 50);
+        targetPool.getPoolObject(-50, -50);
+        targetPool.getPoolObject(-50, 50);
+
     }
 
     @Override
@@ -58,7 +57,7 @@ public class GameScreen extends ScreenAdapter {
 
         world.step(delta, 3, 3);
 
-        for (GameEntity entity: entities)
+        for (GameEntity entity: GameEntity.list)
         {
             entity.update(delta);
         }
@@ -74,7 +73,7 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        for (GameEntity entity: entities)
+        for (GameEntity entity: GameEntity.list)
         {
             entity.dispose();
         }

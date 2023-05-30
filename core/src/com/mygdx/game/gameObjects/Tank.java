@@ -66,10 +66,10 @@ public class Tank extends GameEntity
         }
         else
         {
-            body.setAngularVelocity(-3);
+            body.setAngularVelocity(-3);;
         }
 
-        body.setLinearVelocity(body.getWorldVector(new Vector2(0, 10)));
+        body.setLinearVelocity(body.getWorldVector(new Vector2(0, 30)));
     }
 
     @Override
