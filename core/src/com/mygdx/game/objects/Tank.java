@@ -1,7 +1,5 @@
-package com.mygdx.game.gameObjects;
+package com.mygdx.game.objects;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -10,8 +8,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.InputLisenerRegister;
+import com.mygdx.game.engine.GameEntity;
+import com.mygdx.game.engine.system.event.EntityCallbackReceiver;
+import com.mygdx.game.engine.system.event.IUpdateCallback;
 
-public class Tank extends GameEntity
+public class Tank extends GameEntity implements IUpdateCallback
 {
     Body body;
     World world;
@@ -20,9 +21,10 @@ public class Tank extends GameEntity
     public Tank(World world, int controlKey)
     {
         this.world = world;
-        CreateBodies();
-
         this.controlKey = controlKey;
+        add(new EntityCallbackReceiver().setUpdater(this));
+
+        CreateBodies();
 
         InputLisenerRegister.getInstance().addInputProcessor(new InputAdapter()
         {
@@ -79,7 +81,7 @@ public class Tank extends GameEntity
     }
 
     @Override
-    public void update(float delta)
+    public void onUpdate(float delta)
     {
         body.setLinearVelocity(body.getWorldVector(new Vector2(0, 30)));
     }

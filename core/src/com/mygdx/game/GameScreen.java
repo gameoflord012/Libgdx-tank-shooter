@@ -9,23 +9,24 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.gameObjects.GameEntity;
-import com.mygdx.game.gameObjects.Tank;
-import com.mygdx.game.gameObjects.target.Target;
-import com.mygdx.game.gameObjects.target.TargetPoolFactory;
-import com.mygdx.game.gameObjects.target.TargetPoolObject;
+import com.mygdx.game.engine.BingChilling;
+import com.mygdx.game.engine.GameEntity;
+import com.mygdx.game.engine.Utility;
+import com.mygdx.game.engine.system.GameEngine;
+import com.mygdx.game.objects.Tank;
+import com.mygdx.game.objects.target.TargetPoolFactory;
+import com.mygdx.game.objects.target.TargetPoolObject;
 
 public class GameScreen extends ScreenAdapter {
-    private GameClass game;
+    private BingChilling game;
     private Box2DDebugRenderer debugRenderer;
     WorldLisenerRegister worldLisenerRegister;
     World world;
-    Tank tank;
     Sound sound;
 
     TargetPoolFactory targetPool;
 
-    public GameScreen(GameClass game)
+    public GameScreen(BingChilling game)
     {
         this.game = game;
         debugRenderer = new Box2DDebugRenderer();
@@ -96,8 +97,8 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void CreateLevel() {
-        new Tank(world, Input.Keys.A);
-        new Tank(world, Input.Keys.J);
+        GameEngine.addEntity(new Tank(world, Input.Keys.A));
+        GameEngine.addEntity(new Tank(world, Input.Keys.J));
 
         targetPool.getPoolObject(50, 50);
         targetPool.getPoolObject(-50, -50);
@@ -111,8 +112,6 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         world.step(delta, 3, 3);
-
-        GameEntity.updateAll(delta);
 
         debugRenderer.render(world, game.camera.combined);
     }
@@ -128,6 +127,4 @@ public class GameScreen extends ScreenAdapter {
 
         sound.dispose();
     }
-
-
 }

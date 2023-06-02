@@ -1,6 +1,5 @@
-package com.mygdx.game;
+package com.mygdx.game.engine;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Utility {

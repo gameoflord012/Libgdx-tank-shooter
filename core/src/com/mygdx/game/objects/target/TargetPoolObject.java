@@ -1,6 +1,7 @@
-package com.mygdx.game.gameObjects.target;
+package com.mygdx.game.objects.target;
 
 import com.mygdx.game.WorldLisenerRegister;
+import com.mygdx.game.engine.system.GameEngine;
 
 public class TargetPoolObject
 {
@@ -11,10 +12,12 @@ public class TargetPoolObject
     public TargetPoolObject(WorldLisenerRegister world, TargetPoolFactory factory)
     {
         this.world = world;
-        target = new Target(world);
         this.factory = factory;
 
-        target.addTargetEventLisener(new Target.TargetEvent()
+        target = new Target(world);
+        GameEngine.addEntity(target);
+
+        target.addTargetEventLisener(new Target.Event()
         {
             @Override
             public void onTargetGoHeaven()
@@ -38,7 +41,7 @@ public class TargetPoolObject
     public void removeFromPool()
     {
         factory.poolObjects.remove(this);
-        target.dispose();
+        target.Destroy();
     }
 
     public void returnToPool()

@@ -1,23 +1,36 @@
-package com.mygdx.game.gameObjects;
+package com.mygdx.game.objects;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.particles.values.MeshSpawnShapeValue;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.GameClass;
+import com.mygdx.game.engine.BingChilling;
+import com.mygdx.game.engine.GameEntity;
+import com.mygdx.game.engine.system.event.EntityCallbackReceiver;
+import com.mygdx.game.engine.system.event.IUpdateCallback;
 
-public class Bullet extends GameEntity
+public class Bullet extends GameEntity implements IUpdateCallback
 {
     public Body body;
     private World world;
+
+    @Override
+    public void onUpdate(float delta)
+    {
+        if(body != null && !BingChilling.getInstance().isPointScreen(body.getPosition().x, body.getPosition().y))
+        {
+            world.destroyBody(body);
+            body = null;
+        }
+    }
+
     public Bullet(World world, Vector2 position, float angle)
     {
         this.world = world;
+
+        add(new EntityCallbackReceiver().setUpdater(this));
 
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
@@ -41,13 +54,4 @@ public class Bullet extends GameEntity
         body.setLinearVelocity(body.getWorldVector(new Vector2(0, 50)));
     }
 
-    @Override
-    public void update(float delta)
-    {
-        if(body != null && !GameClass.getInstance().isPointScreen(body.getPosition().x, body.getPosition().y))
-        {
-            world.destroyBody(body);
-            body = null;
-        }
-    }
 }

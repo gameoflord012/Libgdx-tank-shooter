@@ -1,4 +1,4 @@
-package com.mygdx.game.gameObjects.target;
+package com.mygdx.game.objects.target;
 
 import com.mygdx.game.WorldLisenerRegister;
 

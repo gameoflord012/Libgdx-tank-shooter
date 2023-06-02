@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -9,11 +8,12 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.engine.BingChilling;
 
 public class TitleScreen extends ScreenAdapter {
-    private GameClass game;
+    /*private BingChilling game;
 
-    public TitleScreen(GameClass game)
+    public TitleScreen(BingChilling game)
     {
         this.game = game;
     }
@@ -73,5 +73,5 @@ public class TitleScreen extends ScreenAdapter {
     {
         sound.dispose();
         Gdx.input.setInputProcessor(null);
-    }
+    }*/
 }

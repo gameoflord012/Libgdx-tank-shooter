@@ -1,4 +1,4 @@
-package com.mygdx.game.gameObjects.target;
+package com.mygdx.game.objects.target;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -9,21 +9,23 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.WorldLisenerRegister;
-import com.mygdx.game.gameObjects.GameEntity;
+import com.mygdx.game.engine.GameEntity;
+import com.mygdx.game.engine.system.event.EntityCallbackReceiver;
+import com.mygdx.game.engine.system.event.IUpdateCallback;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Target extends GameEntity
+public class Target extends GameEntity implements IUpdateCallback
 {
-    public abstract static class TargetEvent
+    public abstract static class Event
     {
         public abstract void onTargetGoHeaven();
     }
 
-    private Set<TargetEvent> liseners = new HashSet<TargetEvent>();
+    private Set<Event> liseners = new HashSet<Event>();
 
-    public void addTargetEventLisener (TargetEvent lisener)
+    public void addTargetEventLisener (Event lisener)
     {
         liseners.add(lisener);
     }
@@ -40,6 +42,7 @@ public class Target extends GameEntity
     public Target(WorldLisenerRegister worldLisenerRegister)
     {
         this.worldLisenerRegister = worldLisenerRegister;
+        add(new EntityCallbackReceiver().setUpdater(this));
         CreateBodies();
 
         active = true;
@@ -72,6 +75,26 @@ public class Target extends GameEntity
         });
     }
 
+    @Override
+    public void onUpdate(float delta)
+    {
+        if(active && !body.isActive())
+        {
+            body.setActive(true);
+        }
+
+        if(!active && body.isActive())
+        {
+            body.setActive(false);
+
+            for(Event lisener : liseners)
+            {
+                if(lisener != null)
+                    lisener.onTargetGoHeaven();
+            }
+        }
+    }
+
     public void setPosition(float px, float py)
     {
         body.setTransform(px, py, 0);
@@ -96,28 +119,9 @@ public class Target extends GameEntity
     }
 
     @Override
-    public void update(float delta)
+    public void Destroy()
     {
-        if(active && !body.isActive())
-        {
-            body.setActive(true);
-        }
-
-        if(!active && body.isActive())
-        {
-            body.setActive(false);
-
-            for(TargetEvent lisener : liseners)
-            {
-                if(lisener != null)
-                    lisener.onTargetGoHeaven();
-            }
-        }
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
+        super.Destroy();
 
         if(body != null)
         {
