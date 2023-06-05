@@ -1,7 +1,7 @@
-package com.mygdx.game.objects.target;
-
+package com.mygdx.game.entities.target;
+import com.mygdx.game.Core;
 import com.mygdx.game.WorldLisenerRegister;
-import com.mygdx.game.engine.system.GameEngine;
+import core.GE;
 
 public class TargetPoolObject
 {
@@ -15,7 +15,7 @@ public class TargetPoolObject
         this.factory = factory;
 
         target = new Target(world);
-        GameEngine.addEntity(target);
+        Core.gameEngine().addEntity(target);
 
         target.addTargetEventLisener(new Target.Event()
         {

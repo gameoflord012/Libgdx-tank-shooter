@@ -1,35 +1,30 @@
-package com.mygdx.game.objects;
+package com.mygdx.game.entities;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.engine.BingChilling;
-import com.mygdx.game.engine.GameEntity;
-import com.mygdx.game.engine.system.event.EntityCallbackReceiver;
-import com.mygdx.game.engine.system.event.IUpdateCallback;
+import com.mygdx.game.Core;
+
+import core.GameEntity;
+import systems.event.EntityCallbackReceiver;
+import systems.event.IUpdateCallback;
+import systems.physic.PhysicBody;
 
 public class Bullet extends GameEntity implements IUpdateCallback
 {
-    public Body body;
-    private World world;
-
+    PhysicBody physicBody;
     @Override
     public void onUpdate(float delta)
     {
-        if(body != null && !BingChilling.getInstance().isPointScreen(body.getPosition().x, body.getPosition().y))
+        if(!Core.getInstance().isPointScreen(physicBody.body.getPosition().x, physicBody.body.getPosition().y))
         {
-            world.destroyBody(body);
-            body = null;
+            physicBody.body.setActive(false);
         }
     }
 
-    public Bullet(World world, Vector2 position, float angle)
+    public Bullet(Vector2 position, float angle)
     {
-        this.world = world;
-
         add(new EntityCallbackReceiver().setUpdater(this));
 
         BodyDef def = new BodyDef();
@@ -38,7 +33,8 @@ public class Bullet extends GameEntity implements IUpdateCallback
         def.position.set(position);
         def.angle = angle;
 
-        body = world.createBody(def);
+        physicBody = Core.physic().getPhysicBody(def);
+        add(physicBody);
 
         FixtureDef fixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -49,9 +45,7 @@ public class Bullet extends GameEntity implements IUpdateCallback
         });
         fixture.shape = shape;
         fixture.isSensor = true;
-        body.createFixture(fixture);
-
-        body.setLinearVelocity(body.getWorldVector(new Vector2(0, 50)));
+        physicBody.body.createFixture(fixture);
+        physicBody.body.setLinearVelocity(physicBody.body.getWorldVector(new Vector2(0, 50)));
     }
-
 }

@@ -9,16 +9,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.engine.BingChilling;
-import com.mygdx.game.engine.GameEntity;
-import com.mygdx.game.engine.Utility;
-import com.mygdx.game.engine.system.GameEngine;
-import com.mygdx.game.objects.Tank;
-import com.mygdx.game.objects.target.TargetPoolFactory;
-import com.mygdx.game.objects.target.TargetPoolObject;
+import com.mygdx.game.entities.Tank;
+import com.mygdx.game.entities.target.TargetPoolFactory;
+import com.mygdx.game.entities.target.TargetPoolObject;
+
+import core.GE;
+import core.Utility;
 
 public class GameScreen extends ScreenAdapter {
-    private BingChilling game;
+    private Core game;
     private Box2DDebugRenderer debugRenderer;
     WorldLisenerRegister worldLisenerRegister;
     World world;
@@ -26,7 +25,7 @@ public class GameScreen extends ScreenAdapter {
 
     TargetPoolFactory targetPool;
 
-    public GameScreen(BingChilling game)
+    public GameScreen(Core game)
     {
         this.game = game;
         debugRenderer = new Box2DDebugRenderer();
@@ -97,8 +96,8 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void CreateLevel() {
-        GameEngine.addEntity(new Tank(world, Input.Keys.A));
-        GameEngine.addEntity(new Tank(world, Input.Keys.J));
+        Core.gameEngine().addEntity(new Tank(Input.Keys.A));
+        Core.gameEngine().addEntity(new Tank(Input.Keys.J));
 
         targetPool.getPoolObject(50, 50);
         targetPool.getPoolObject(-50, -50);

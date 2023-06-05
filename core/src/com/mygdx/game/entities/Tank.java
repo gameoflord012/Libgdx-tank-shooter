@@ -1,26 +1,26 @@
-package com.mygdx.game.objects;
+package com.mygdx.game.entities;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.Core;
 import com.mygdx.game.InputLisenerRegister;
-import com.mygdx.game.engine.GameEntity;
-import com.mygdx.game.engine.system.event.EntityCallbackReceiver;
-import com.mygdx.game.engine.system.event.IUpdateCallback;
+import core.GE;
+import core.GameEntity;
+import systems.event.EntityCallbackReceiver;
+import systems.event.IUpdateCallback;
+import systems.physic.PhysicBody;
+import systems.physic.PhysicSystem;
 
 public class Tank extends GameEntity implements IUpdateCallback
 {
-    Body body;
-    World world;
+    PhysicBody pBody;
     int controlKey;
 
-    public Tank(World world, int controlKey)
+    public Tank(int controlKey)
     {
-        this.world = world;
         this.controlKey = controlKey;
         add(new EntityCallbackReceiver().setUpdater(this));
 
@@ -32,12 +32,11 @@ public class Tank extends GameEntity implements IUpdateCallback
             public boolean keyDown(int keycode) {
                 if(keycode == Tank.this.controlKey)
                 {
-                    body.setAngularVelocity(3.5f);
+                    pBody.body.setAngularVelocity(3.5f);
 
                     Bullet bullet = new Bullet(
-                        Tank.this.world,
-                        body.getWorldPoint(new Vector2(0, 15)),
-                        body.getAngle());
+                        pBody.body.getWorldPoint(new Vector2(0, 15)),
+                        pBody.body.getAngle());
 
                     return true;
                 }
@@ -49,7 +48,7 @@ public class Tank extends GameEntity implements IUpdateCallback
             public boolean keyUp(int keycode) {
                 if(keycode == Tank.this.controlKey)
                 {
-                    body.setAngularVelocity(-3.5f);
+                    pBody.body.setAngularVelocity(-3.5f);
 
                     return true;
                 }
@@ -63,26 +62,27 @@ public class Tank extends GameEntity implements IUpdateCallback
         dynamic.type = BodyDef.BodyType.DynamicBody;
         dynamic.position.set(0, 0);
 
-        body = world.createBody(dynamic);
+        pBody = Core.physic().getPhysicBody(dynamic);
+        add(pBody);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(8,10);
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
-        body.createFixture(fixture);
+        pBody.body.createFixture(fixture);
 
         shape.setAsBox(3 ,8, new Vector2(0, 5), 0);
         fixture.shape = shape;
-        body.createFixture(fixture);
+        pBody.body.createFixture(fixture);
 
         shape.dispose();
 
-        body.setAngularVelocity(-3.5f);
+        pBody.body.setAngularVelocity(-3.5f);
     }
 
     @Override
     public void onUpdate(float delta)
     {
-        body.setLinearVelocity(body.getWorldVector(new Vector2(0, 30)));
+        pBody.body.setLinearVelocity(pBody.body.getWorldVector(new Vector2(0, 30)));
     }
 }

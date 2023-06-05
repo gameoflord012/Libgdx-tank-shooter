@@ -1,8 +1,8 @@
-package com.mygdx.game.engine.system.event;
+package systems.event;
 
-import com.badlogic.ashley.core.Component;
+import core.ComponentWrapper;
 
-public class EntityCallbackReceiver implements Component {
+public class EntityCallbackReceiver extends ComponentWrapper {
     IUpdateCallback update;
     ICreateCallback create;
 

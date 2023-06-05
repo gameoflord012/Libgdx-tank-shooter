@@ -1,4 +1,4 @@
-package com.mygdx.game.engine.system.destroy;
+package systems.destroy;
 
 import com.badlogic.ashley.core.Component;
 

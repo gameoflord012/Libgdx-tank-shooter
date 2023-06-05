@@ -1,4 +1,4 @@
-package com.mygdx.game.objects.target;
+package com.mygdx.game.entities.target;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -9,12 +9,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.WorldLisenerRegister;
-import com.mygdx.game.engine.GameEntity;
-import com.mygdx.game.engine.system.event.EntityCallbackReceiver;
-import com.mygdx.game.engine.system.event.IUpdateCallback;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import core.GameEntity;
+import systems.event.EntityCallbackReceiver;
+import systems.event.IUpdateCallback;
 
 public class Target extends GameEntity implements IUpdateCallback
 {

@@ -1,10 +1,12 @@
-package com.mygdx.game.engine.system.destroy;
+package systems.destroy;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 
-public class EntityDestroySystem extends EntitySystem
+import systems.EntitySystemWrapper;
+
+public class EntityDestroySystem extends EntitySystemWrapper
 {
     @Override
     public void update(float deltaTime) {

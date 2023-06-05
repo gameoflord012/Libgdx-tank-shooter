@@ -1,4 +1,4 @@
-package com.mygdx.game.engine.system.event;
+package systems.event;
 
 public interface ICreateCallback
 {
