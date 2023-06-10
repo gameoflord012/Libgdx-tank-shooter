@@ -82,5 +82,8 @@ public class Tank extends GameEntity implements IUpdateCallback
     public void onUpdate(float delta)
     {
         pBody.body.setLinearVelocity(pBody.body.getWorldVector(new Vector2(0, 30)));
+
+        transform.px = pBody.body.getPosition().x;
+        transform.py = pBody.body.getPosition().y;
     }
 }

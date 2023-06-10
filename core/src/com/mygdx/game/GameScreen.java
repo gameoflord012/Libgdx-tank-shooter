@@ -7,6 +7,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.mygdx.game.entities.Tank;
 import com.mygdx.game.entities.target.TargetPoolFactory;
@@ -17,6 +20,8 @@ import utility.Utility;
 public class GameScreen extends ScreenAdapter {
     private Core game;
     private Box2DDebugRenderer debugRenderer;
+
+    SpriteBatch batch;
     Sound sound;
 
     TargetPoolFactory targetPool;
