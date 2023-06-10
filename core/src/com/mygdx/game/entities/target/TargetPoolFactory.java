@@ -1,20 +1,13 @@
 package com.mygdx.game.entities.target;
 
-import com.mygdx.game.WorldLisenerRegister;
-
 import java.util.Stack;
 
 public class TargetPoolFactory
 {
-    WorldLisenerRegister world;
     int size = 2;
 
     Stack<TargetPoolObject> poolObjects = new Stack<TargetPoolObject>();
 
-    public TargetPoolFactory(WorldLisenerRegister world)
-    {
-        this.world = world;
-    }
 
     public TargetPoolObject getPoolObject(float px, float py)
     {
@@ -22,7 +15,7 @@ public class TargetPoolFactory
 
         if(poolObjects.isEmpty())
         {
-            poolObject = new TargetPoolObject(world, this);
+            poolObject = new TargetPoolObject(this);
         }
         else
         {

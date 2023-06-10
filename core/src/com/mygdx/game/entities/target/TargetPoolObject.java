@@ -1,20 +1,16 @@
 package com.mygdx.game.entities.target;
 import com.mygdx.game.Core;
-import com.mygdx.game.WorldLisenerRegister;
-import core.GE;
 
 public class TargetPoolObject
 {
     private Target target;
     private TargetPoolFactory factory;
-    WorldLisenerRegister world;
 
-    public TargetPoolObject(WorldLisenerRegister world, TargetPoolFactory factory)
+    public TargetPoolObject(TargetPoolFactory factory)
     {
-        this.world = world;
         this.factory = factory;
 
-        target = new Target(world);
+        target = new Target();
         Core.gameEngine().addEntity(target);
 
         target.addTargetEventLisener(new Target.Event()

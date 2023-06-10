@@ -16,7 +16,6 @@ import utility.Utility;
 public class GameScreen extends ScreenAdapter {
     private Core game;
     private Box2DDebugRenderer debugRenderer;
-    WorldLisenerRegister worldLisenerRegister;
     Sound sound;
 
     TargetPoolFactory targetPool;
@@ -25,9 +24,8 @@ public class GameScreen extends ScreenAdapter {
     {
         this.game = game;
         debugRenderer = new Box2DDebugRenderer();
-        worldLisenerRegister = new WorldLisenerRegister(Core.physic().getWorld());
         sound = Gdx.audio.newSound(Gdx.files.internal("dnx-116856.mp3"));
-        targetPool = new TargetPoolFactory(worldLisenerRegister);
+        targetPool = new TargetPoolFactory();
 
         InputLisenerRegister.getInstance().addInputProcessor(new InputProcessor() {
             @Override
@@ -92,7 +90,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void CreateLevel() {
         Core.gameEngine().addEntity(new Tank(Input.Keys.A));
-        //Core.gameEngine().addEntity(new Tank(Input.Keys.J));
+        Core.gameEngine().addEntity(new Tank(Input.Keys.J));
 
         targetPool.getPoolObject(50, 50);
         targetPool.getPoolObject(-50, -50);

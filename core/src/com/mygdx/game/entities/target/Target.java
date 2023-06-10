@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.mygdx.game.WorldLisenerRegister;
+import com.mygdx.game.Core;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +32,6 @@ public class Target extends GameEntity implements IUpdateCallback
     }
 
     public Body body;
-    WorldLisenerRegister worldLisenerRegister;
     private boolean active;
 
     public void setActive(boolean active)
@@ -40,15 +39,14 @@ public class Target extends GameEntity implements IUpdateCallback
         this.active = active;
     }
 
-    public Target(WorldLisenerRegister worldLisenerRegister)
+    public Target()
     {
-        this.worldLisenerRegister = worldLisenerRegister;
         add(new EntityCallbackReceiver().setUpdater(this));
         CreateBodies();
 
         active = true;
 
-        worldLisenerRegister.addContactLisener(new ContactListener() {
+        Core.physic().addContactLisener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
                 if(
@@ -106,7 +104,7 @@ public class Target extends GameEntity implements IUpdateCallback
         dynamic.type = BodyDef.BodyType.StaticBody;
         dynamic.position.set(0, 0);
 
-        this.body = worldLisenerRegister.getWorld().createBody(dynamic);
+        this.body = Core.physic().getWorld().createBody(dynamic);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(5,5);
@@ -126,7 +124,7 @@ public class Target extends GameEntity implements IUpdateCallback
 
         if(body != null)
         {
-            worldLisenerRegister.getWorld().destroyBody(body);
+            Core.physic().getWorld().destroyBody(body);
             body = null;
         }
     }
