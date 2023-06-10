@@ -6,21 +6,17 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.entities.Tank;
 import com.mygdx.game.entities.target.TargetPoolFactory;
 import com.mygdx.game.entities.target.TargetPoolObject;
 
-import core.GE;
-import core.Utility;
+import utility.Utility;
 
 public class GameScreen extends ScreenAdapter {
     private Core game;
     private Box2DDebugRenderer debugRenderer;
     WorldLisenerRegister worldLisenerRegister;
-    World world;
     Sound sound;
 
     TargetPoolFactory targetPool;
@@ -29,8 +25,7 @@ public class GameScreen extends ScreenAdapter {
     {
         this.game = game;
         debugRenderer = new Box2DDebugRenderer();
-        world = new World(new Vector2(0, 0), true);
-        worldLisenerRegister = new WorldLisenerRegister(world);
+        worldLisenerRegister = new WorldLisenerRegister(Core.physic().getWorld());
         sound = Gdx.audio.newSound(Gdx.files.internal("dnx-116856.mp3"));
         targetPool = new TargetPoolFactory(worldLisenerRegister);
 
@@ -97,7 +92,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void CreateLevel() {
         Core.gameEngine().addEntity(new Tank(Input.Keys.A));
-        Core.gameEngine().addEntity(new Tank(Input.Keys.J));
+        //Core.gameEngine().addEntity(new Tank(Input.Keys.J));
 
         targetPool.getPoolObject(50, 50);
         targetPool.getPoolObject(-50, -50);
@@ -110,9 +105,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0f, 0f, 0f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        world.step(delta, 3, 3);
-
-        debugRenderer.render(world, game.camera.combined);
+        debugRenderer.render(Core.physic().getWorld(), game.camera.combined);
     }
 
     @Override

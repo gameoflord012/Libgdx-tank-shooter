@@ -1,16 +1,24 @@
-package systems.physic;
+package core.physic;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
+import core.ComponentWrapable;
 import core.ComponentWrapper;
+import utility.IWrapable;
 
-public class PhysicBody extends ComponentWrapper
+public class PhysicBody extends ComponentWrapper<PhysicBody>
 {
-    public static ComponentMapper<ComponentWrapper.Component> mapper =
-            ComponentMapper.getFor(ComponentWrapper.Component.class);
+    @Override
+    protected ComponentWrapable<PhysicBody> getWrappable() {
+        return new Wrapable();
+    }
+
+    public static class Wrapable extends ComponentWrapable<PhysicBody>
+    {
+
+    }
 
     public final World world;
     public final Body body;

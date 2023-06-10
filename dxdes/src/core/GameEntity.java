@@ -1,7 +1,8 @@
 package core;
 
 import com.badlogic.ashley.core.Entity;
-import systems.destroy.Destroyer;
+
+import core.destroy.Destroyer;
 
 public class GameEntity
 {
@@ -12,14 +13,14 @@ public class GameEntity
         base = new Entity();
     }
 
-    public GameEntity add(ComponentWrapper component)
+    public GameEntity add(ComponentWrapper<?> component)
     {
-        base.add(component.base);
+        base.add(component.wrapable);
         return this;
     }
 
     public void Destroy()
     {
-        base.add(new Destroyer());
+        add(new Destroyer());
     }
 }

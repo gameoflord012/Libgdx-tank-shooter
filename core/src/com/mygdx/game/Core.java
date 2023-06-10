@@ -5,8 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import core.GE;
-import systems.EntitySystemWrapper;
-import systems.physic.PhysicSystem;
+import core.physic.PhysicSystem;
 
 public class Core extends Game {
 	public static final float SCREEN_WIDTH = 320f, SCREEN_HEIGHT = 240f;
