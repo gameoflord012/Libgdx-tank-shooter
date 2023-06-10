@@ -5,7 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import core.GE;
-import core.physic.PhysicSystem;
+import core.system.input.InputSystem;
+import core.system.physic.PhysicSystem;
 
 public class Core extends Game {
 	public static final float SCREEN_WIDTH = 320f, SCREEN_HEIGHT = 240f;
@@ -54,6 +55,11 @@ public class Core extends Game {
 	public static PhysicSystem physic()
 	{
 		return getInstance().gameEngine.getSystem(PhysicSystem.class);
+	}
+
+	public static InputSystem input()
+	{
+		return getInstance().gameEngine.getSystem(InputSystem.class);
 	}
 
 	public static GE gameEngine()

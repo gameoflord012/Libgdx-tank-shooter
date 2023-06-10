@@ -7,9 +7,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.Core;
 
 import core.GameEntity;
-import core.event.EntityCallbackReceiver;
-import core.event.IUpdateCallback;
-import core.physic.PhysicBody;
+import core.system.event.EntityCallbackReceiver;
+import core.system.event.IUpdateCallback;
+import core.system.physic.PhysicBody;
 
 public class Bullet extends GameEntity implements IUpdateCallback
 {

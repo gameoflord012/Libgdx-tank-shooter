@@ -1,16 +1,15 @@
 package core;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.EntitySystem;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import core.system.EntitySystemWrapable;
 import core.system.EntitySystemWrapper;
-import core.destroy.EntityDestroySystem;
-import core.event.EntityEventSystem;
-import core.physic.PhysicSystem;
+import core.system.destroy.EntityDestroySystem;
+import core.system.event.EntityEventSystem;
+import core.system.input.InputSystem;
+import core.system.physic.PhysicSystem;
 
 public class GE
 {
@@ -27,6 +26,7 @@ public class GE
     {
         base = new Engine();
 
+        addSystem(new InputSystem());
         addSystem(new PhysicSystem());
         addSystem(new EntityEventSystem());
         addSystem(new EntityDestroySystem());

@@ -1,4 +1,4 @@
-package core.destroy;
+package core.system.destroy;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;

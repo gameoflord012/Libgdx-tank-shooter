@@ -27,7 +27,7 @@ public class GameScreen extends ScreenAdapter {
         sound = Gdx.audio.newSound(Gdx.files.internal("dnx-116856.mp3"));
         targetPool = new TargetPoolFactory();
 
-        InputLisenerRegister.getInstance().addInputProcessor(new InputProcessor() {
+        Core.input().addInputProcessor(new InputProcessor() {
             @Override
             public boolean keyDown(int keycode) {
                 if(keycode == Input.Keys.SPACE)

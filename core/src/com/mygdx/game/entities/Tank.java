@@ -6,12 +6,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.Core;
-import com.mygdx.game.InputLisenerRegister;
 
 import core.GameEntity;
-import core.event.EntityCallbackReceiver;
-import core.event.IUpdateCallback;
-import core.physic.PhysicBody;
+import core.system.event.EntityCallbackReceiver;
+import core.system.event.IUpdateCallback;
+import core.system.physic.PhysicBody;
 
 public class Tank extends GameEntity implements IUpdateCallback
 {
@@ -25,7 +24,7 @@ public class Tank extends GameEntity implements IUpdateCallback
 
         CreateBodies();
 
-        InputLisenerRegister.getInstance().addInputProcessor(new InputAdapter()
+        Core.input().addInputProcessor(new InputAdapter()
         {
             @Override
             public boolean keyDown(int keycode) {

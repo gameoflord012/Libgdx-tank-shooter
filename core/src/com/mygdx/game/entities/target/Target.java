@@ -14,8 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import core.GameEntity;
-import core.event.EntityCallbackReceiver;
-import core.event.IUpdateCallback;
+import core.system.event.EntityCallbackReceiver;
+import core.system.event.IUpdateCallback;
 
 public class Target extends GameEntity implements IUpdateCallback
 {

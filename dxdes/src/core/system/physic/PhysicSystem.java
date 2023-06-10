@@ -1,7 +1,5 @@
-package core.physic;
+package core.system.physic;
 
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -11,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import core.system.EntitySystemWrapable;

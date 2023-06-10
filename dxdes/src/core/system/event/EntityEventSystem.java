@@ -1,13 +1,11 @@
-package core.event;
+package core.system.event;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import core.ComponentWrapable;
+
 import core.system.EntitySystemWrapable;
 import core.system.EntitySystemWrapper;
-import utility.IWrapable;
 
 public class EntityEventSystem extends EntitySystemWrapper<EntityEventSystem>
 {

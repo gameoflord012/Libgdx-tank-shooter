@@ -1,6 +1,4 @@
-package core.destroy;
-
-import com.badlogic.ashley.core.Component;
+package core.system.destroy;
 
 import core.ComponentWrapable;
 import core.ComponentWrapper;

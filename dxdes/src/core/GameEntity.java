@@ -2,7 +2,7 @@ package core;
 
 import com.badlogic.ashley.core.Entity;
 
-import core.destroy.Destroyer;
+import core.system.destroy.Destroyer;
 
 public class GameEntity
 {

@@ -1,4 +1,4 @@
-package core.event;
+package core.system.event;
 
 public interface ICreateCallback
 {
