@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import core.GE;
@@ -31,6 +32,7 @@ public class Core extends Game {
 	public void create ()
 	{
 		gameEngine = new GE();
+
 		camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		this.gameScreen = new GameScreen((this));

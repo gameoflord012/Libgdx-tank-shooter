@@ -1,16 +1,20 @@
 package core;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.math.Vector3;
 
 import core.system.destroy.Destroyer;
 
 public class GameEntity
 {
     public final Entity base;
+    public final Transform transform;
+
 
     public GameEntity()
     {
         base = new Entity();
+        transform = new Transform();
     }
 
     public GameEntity add(ComponentWrapper<?> component)
@@ -23,4 +27,5 @@ public class GameEntity
     {
         add(new Destroyer());
     }
+
 }
