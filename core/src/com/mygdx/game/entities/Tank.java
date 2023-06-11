@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.Core;
 
 import core.GameEntity;
+import core.system.debug.Debugger;
 import core.system.event.EntityCallbackReceiver;
 import core.system.event.IUpdateCallback;
 import core.system.physic.PhysicBody;
@@ -21,6 +22,7 @@ public class Tank extends GameEntity implements IUpdateCallback
     {
         this.controlKey = controlKey;
         add(new EntityCallbackReceiver().setUpdater(this));
+        add(new Debugger());
 
         CreateBodies();
 

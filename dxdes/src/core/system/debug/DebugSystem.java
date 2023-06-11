@@ -3,6 +3,8 @@ package core.system.debug;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import core.component.ComponentCreator;
 import core.system.EntitySystemWrapable;
@@ -13,7 +15,7 @@ import core.system.render.Renderer;
 
 public class DebugSystem extends EntitySystemWrapper<DebugSystem>
 {
-    public class Wrapable extends EntitySystemWrapable<DebugSystem> implements IRenderCallback
+    public class Wrapable extends EntitySystemWrapable<DebugSystem>
     {
         Debugger debugger;
         Renderer renderer;
@@ -25,25 +27,23 @@ public class DebugSystem extends EntitySystemWrapper<DebugSystem>
             for(Entity entity : getEngine().getEntitiesFor(Family.all(Debugger.Wrapable.class).get()))
             {
                 debugger = Debugger.mapper.get(entity).getWrapper();
-                renderer = Renderer.mapper.get(entity).getWrapper();
 
-                if(renderer == null)
+                if(Renderer.mapper.get(entity) == null)
                 {
                     renderer = DebugSystem.this.getEngine().
                             getSystem(RenderSystem.class).
                             getCreator(Renderer.class).create();
+
+                    entity.add(renderer.wrapable);
+                }
+                else
+                {
+                    renderer = Renderer.mapper.get(entity).getWrapper();
                 }
 
-                renderer.addRenderCallback(Wrapable.this);
+                if(!debugger.isHasRenderer())
+                    renderer.addRenderCallback(debugger);
             }
-        }
-
-        @Override
-        public void render(float deltatime) {
-            BitmapFont font = new BitmapFont();
-            renderer.batch.begin();
-            font.draw(renderer.batch, debugger.debugText, 0, 0);
-            renderer.batch.end();
         }
     }
     

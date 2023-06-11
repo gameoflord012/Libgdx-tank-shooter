@@ -49,9 +49,9 @@ public class Core extends Game {
 	@Override
 	public void render()
 	{
-		gameEngine.update(Gdx.graphics.getDeltaTime());
-
 		super.render();
+
+		gameEngine.update(Gdx.graphics.getDeltaTime());
 	}
 
 	public static PhysicSystem physic()

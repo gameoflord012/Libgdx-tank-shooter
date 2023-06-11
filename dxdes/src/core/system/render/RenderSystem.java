@@ -11,7 +11,7 @@ import core.system.EntitySystemWrapper;
 
 public class RenderSystem extends EntitySystemWrapper<RenderSystem> {
 
-    public static class Wrapable extends EntitySystemWrapable<RenderSystem>
+    public class Wrapable extends EntitySystemWrapable<RenderSystem>
     {
         @Override
         public void update(float deltaTime) {
@@ -22,7 +22,7 @@ public class RenderSystem extends EntitySystemWrapper<RenderSystem> {
 
                 for(IRenderCallback renderCallback : renderer.getRenderCallBacks())
                 {
-                    renderCallback.render(deltaTime);
+                    renderCallback.render(deltaTime, batch, shapeRenderer);
                 }
             }
         }
@@ -45,13 +45,8 @@ public class RenderSystem extends EntitySystemWrapper<RenderSystem> {
         addCreator(new ComponentCreator<Renderer>(Renderer.class) {
             @Override
             public Renderer create() {
-                return new Renderer(batch, shapeRenderer);
+                return new Renderer();
             }
         });
-    }
-
-    public Renderer getRenderer()
-    {
-        return new Renderer(batch, shapeRenderer);
     }
 }
