@@ -1,9 +1,12 @@
 package core.system.debug;
 
-import core.ComponentWrapable;
-import core.ComponentWrapper;
+import com.badlogic.ashley.core.ComponentMapper;
+
+import core.component.ComponentWrapable;
+import core.component.ComponentWrapper;
 
 public class Debugger extends ComponentWrapper<Debugger> {
+    public static ComponentMapper<Debugger.Wrapable> mapper = ComponentMapper.getFor(Debugger.Wrapable.class);
     public static class Wrapable extends ComponentWrapable<Debugger>
     {
 

@@ -1,8 +1,9 @@
 package core;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.math.Vector3;
 
+import core.component.ComponentWrapper;
+import core.component.Transform;
 import core.system.destroy.Destroyer;
 
 public class GameEntity

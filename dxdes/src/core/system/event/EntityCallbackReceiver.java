@@ -2,8 +2,8 @@ package core.system.event;
 
 import com.badlogic.ashley.core.ComponentMapper;
 
-import core.ComponentWrapable;
-import core.ComponentWrapper;
+import core.component.ComponentWrapable;
+import core.component.ComponentWrapper;
 
 public class EntityCallbackReceiver extends ComponentWrapper<EntityCallbackReceiver> {
     public static ComponentMapper<EntityCallbackReceiver.Wrapable> mapper =

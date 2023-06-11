@@ -4,8 +4,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
-import core.ComponentWrapable;
-import core.ComponentWrapper;
+import core.component.ComponentWrapable;
+import core.component.ComponentWrapper;
 
 public class PhysicBody extends ComponentWrapper<PhysicBody>
 {

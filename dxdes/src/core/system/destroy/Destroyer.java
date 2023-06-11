@@ -1,7 +1,7 @@
 package core.system.destroy;
 
-import core.ComponentWrapable;
-import core.ComponentWrapper;
+import core.component.ComponentWrapable;
+import core.component.ComponentWrapper;
 
 public class Destroyer extends ComponentWrapper<Destroyer> {
     public static class Wrapable extends ComponentWrapable<Destroyer>

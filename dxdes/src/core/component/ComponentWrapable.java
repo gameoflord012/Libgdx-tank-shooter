@@ -1,4 +1,4 @@
-package core;
+package core.component;
 
 import com.badlogic.ashley.core.Component;
 
