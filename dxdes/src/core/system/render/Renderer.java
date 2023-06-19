@@ -4,8 +4,6 @@ import core.component.ComponentWrapable;
 import core.component.ComponentWrapper;
 
 import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,10 +1,12 @@
 package core.system.debug;
 
 import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import core.GameEntity;
 import core.component.ComponentWrapable;
 import core.component.ComponentWrapper;
 import core.system.render.IRenderCallback;
@@ -14,6 +16,13 @@ public class Debugger extends ComponentWrapper<Debugger> implements IRenderCallb
     public static ComponentMapper<Debugger.Wrapable> mapper = ComponentMapper.getFor(Debugger.Wrapable.class);
 
     private boolean hasRenderer = false;
+    private GameEntity gameEntity;
+
+    @Override
+    public void onComponentAdded(GameEntity gameEntity) {
+        this.gameEntity = gameEntity;
+    }
+
     public boolean isHasRenderer()
     {
         return hasRenderer;
@@ -26,7 +35,7 @@ public class Debugger extends ComponentWrapper<Debugger> implements IRenderCallb
 
         BitmapFont font = new BitmapFont();
         batch.begin();
-        font.draw(batch, debugText, 50, 50);
+        font.draw(batch, debugText, gameEntity.transform.px, gameEntity.transform.py);
         batch.end();
     }
 

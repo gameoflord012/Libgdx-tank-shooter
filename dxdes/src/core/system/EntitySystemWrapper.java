@@ -18,16 +18,4 @@ public abstract class EntitySystemWrapper<SystemType extends  EntitySystemWrappe
     {
         return ((GE.Wrappable)wrapable.getEngine()).getWrapper();
     }
-
-    private Map<String, ComponentCreator<?>> creators = new HashMap<>();
-
-    public void addCreator(ComponentCreator<?> creator)
-    {
-        creators.put(creator.type.toString(), creator);
-    }
-
-    public <T> ComponentCreator<T> getCreator(Class<T> componentClass)
-    {
-        return (ComponentCreator<T>)creators.get(componentClass.toString());
-    }
 }

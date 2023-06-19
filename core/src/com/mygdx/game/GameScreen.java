@@ -19,7 +19,7 @@ import utility.Utility;
 
 public class GameScreen extends ScreenAdapter {
     private Core game;
-    private Box2DDebugRenderer debugRenderer;
+
 
     SpriteBatch batch;
     Sound sound;
@@ -29,7 +29,6 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(Core game)
     {
         this.game = game;
-        debugRenderer = new Box2DDebugRenderer();
         sound = Gdx.audio.newSound(Gdx.files.internal("dnx-116856.mp3"));
         targetPool = new TargetPoolFactory();
 
@@ -73,8 +72,6 @@ public class GameScreen extends ScreenAdapter {
     {
         Gdx.gl.glClearColor(0.10f, 0.2f, 0.25f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        debugRenderer.render(Core.physic().getWorld(), game.camera.combined);
     }
 
     @Override

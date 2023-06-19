@@ -2,12 +2,15 @@ package core.system.render;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
-import core.component.ComponentCreator;
+import core.GameEntity;
 import core.system.EntitySystemWrapable;
 import core.system.EntitySystemWrapper;
+import core.system.physic.PhysicSystem;
 
 public class RenderSystem extends EntitySystemWrapper<RenderSystem> {
 
@@ -15,16 +18,20 @@ public class RenderSystem extends EntitySystemWrapper<RenderSystem> {
     {
         @Override
         public void update(float deltaTime) {
-            for(Entity entity :
-                    getEngine().getEntitiesFor(Family.all(Renderer.Wrapable.class).get()))
+            for(GameEntity entity :
+                    RenderSystem.this.getEngine().getEntitiesFor(Family.all(Renderer.Wrapable.class).get()))
             {
-                Renderer renderer = entity.getComponent(Renderer.Wrapable.class).getWrapper();
+                Renderer renderer = entity.getComponent(Renderer.class);
 
                 for(IRenderCallback renderCallback : renderer.getRenderCallBacks())
                 {
                     renderCallback.render(deltaTime, batch, shapeRenderer);
                 }
             }
+
+            debugRenderer.render(
+                    RenderSystem.this.getEngine().getSystem(PhysicSystem.class).getWorld(),
+                    camera.combined);
         }
     }
 
@@ -36,17 +43,13 @@ public class RenderSystem extends EntitySystemWrapper<RenderSystem> {
 
     public final SpriteBatch batch;
     public final ShapeRenderer shapeRenderer;
+    private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+    public final OrthographicCamera camera;
 
     public RenderSystem()
     {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-
-        addCreator(new ComponentCreator<Renderer>(Renderer.class) {
-            @Override
-            public Renderer create() {
-                return new Renderer();
-            }
-        });
+        camera = new OrthographicCamera();
     }
 }

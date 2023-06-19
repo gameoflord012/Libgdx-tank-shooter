@@ -1,8 +1,14 @@
 package core;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import core.system.EntitySystemWrapper;
@@ -17,6 +23,17 @@ import utility.IWrapable;
 
 public class GE extends BaseWrapper<GE, GE.Wrappable>
 {
+    public GameEntity[] getEntitiesFor(Family family)
+    {
+        List<GameEntity> gameEntities = new ArrayList<>();
+        for(Entity entity : wrapable.getEntitiesFor(family))
+        {
+            gameEntities.add(((GameEntity.Wrapable)entity).getWrapper());
+        }
+
+        return gameEntities.toArray(new GameEntity[0]);
+    }
+
     public class Wrappable extends Engine implements IWrapable<GE>
     {
         private GE wrapper;
@@ -44,6 +61,8 @@ public class GE extends BaseWrapper<GE, GE.Wrappable>
         wrapable.addSystem(systemWrapper.wrapable);
     }
 
+
+
     public GE()
     {
         super();
@@ -58,7 +77,8 @@ public class GE extends BaseWrapper<GE, GE.Wrappable>
 
     public void addEntity(GameEntity entity)
     {
-        wrapable.addEntity(entity.base);
+        wrapable.addEntity(entity.wrapable);
+        entity.onGameEntityAdded(this);
     }
 
     public void update(float deltatime)
@@ -66,7 +86,7 @@ public class GE extends BaseWrapper<GE, GE.Wrappable>
         wrapable.update(deltatime);
     }
 
-    public <T extends EntitySystemWrapper<?>> T getSystem(Class<T> systemClass)
+    public <T extends EntitySystemWrapper<T>> T getSystem(Class<T> systemClass)
     {
         return (T)systemMapper.get(systemClass.toString());
     }

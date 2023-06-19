@@ -19,4 +19,10 @@ public abstract class EntitySystemWrapable<SystemType> extends com.badlogic.ashl
     public SystemType getWrapper() {
         return wrapper;
     }
+
+    @Override
+    public Engine getEngine()
+    {
+        return super.getEngine();
+    }
 }

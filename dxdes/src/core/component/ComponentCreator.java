@@ -1,14 +1,13 @@
 package core.component;
 
+import core.GameEntity;
 import core.system.EntitySystemWrapper;
 
-public abstract class ComponentCreator<ComponentType>
+public abstract class ComponentCreator<ComponentType extends ComponentWrapper<ComponentType>, SystemType extends EntitySystemWrapper<SystemType>>
 {
-    public final Class<ComponentType> type;
-    public abstract ComponentType create();
+    protected ComponentCreator(){}
 
-    public ComponentCreator(Class<ComponentType> type)
-    {
-        this.type = type;
-    }
+    public abstract ComponentType createDefault(SystemType system, GameEntity entity);
+    public abstract Class<SystemType> getSystemClass();
+    public abstract Class<ComponentType> getComponentClass();
 }
