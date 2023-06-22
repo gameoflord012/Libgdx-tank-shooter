@@ -1,11 +1,30 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
 sourceCompatibility = 1.8
-sourceSets.main.java.srcDirs = [ "src/" ]
-sourceSets.main.resources.srcDirs = ["../assets"]
+sourceSets.main.java.srcDirs = ["src/"]
 
 project.ext.mainClassName = "com.mygdx.game.DesktopLauncher"
 project.ext.assetsDir = new File("../assets")
 
-import org.gradle.internal.os.OperatingSystem
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation rootProject.project(":core")
+    api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+}
+
+test {
+    useJUnitPlatform()
+}
 
 task run(dependsOn: classes, type: JavaExec) {
     mainClass = project.mainClassName
@@ -13,11 +32,6 @@ task run(dependsOn: classes, type: JavaExec) {
     standardInput = System.in
     workingDir = project.assetsDir
     ignoreExitValue = true
-
-    if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
-        // Required to run on macOS
-        jvmArgs += "-XstartOnFirstThread"
-    }
 }
 
 task debug(dependsOn: classes, type: JavaExec) {
@@ -28,20 +42,3 @@ task debug(dependsOn: classes, type: JavaExec) {
     ignoreExitValue = true
     debug = true
 }
-
-task dist(type: Jar) {
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-    manifest {
-        attributes 'Main-Class': project.mainClassName
-    }
-    dependsOn configurations.runtimeClasspath
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    with jar
-}
-
-
-dist.dependsOn classes
-
-eclipse.project.name = appName + "-desktop"\

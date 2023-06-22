@@ -1,4 +1,4 @@
-include 'desktop', 'core'
-include ':creativemode'
-include ':dxdes'
-include ':dxdes'
+rootProject.name = 'TankShooter'
+include 'core'
+include 'desktop'
+include 'donut'

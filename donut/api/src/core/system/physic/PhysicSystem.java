@@ -1,18 +1,12 @@
 package core.system.physic;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
+import core.system.EntitySystemWrapable;
+import core.system.EntitySystemWrapper;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import core.system.EntitySystemWrapable;
-import core.system.EntitySystemWrapper;
 
 public class PhysicSystem extends EntitySystemWrapper<PhysicSystem>
 {
@@ -89,7 +83,7 @@ public class PhysicSystem extends EntitySystemWrapper<PhysicSystem>
         return contactListeners.toArray(new ContactListener[0]);
     }
 
-    public void addContactLisener(ContactListener lisener)
+    public void addContactListener(ContactListener lisener)
     {
         contactListeners.add(lisener);
     }

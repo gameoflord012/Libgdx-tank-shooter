@@ -1,9 +1,5 @@
 package core;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
-
 import core.component.ComponentCreator;
 import core.component.ComponentWrapper;
 import core.component.Transform;
@@ -11,6 +7,10 @@ import core.system.EntitySystemWrapper;
 import core.system.destroy.Destroyer;
 import utility.BaseWrapper;
 import utility.IWrapable;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class GameEntity extends BaseWrapper<GameEntity, GameEntity.Wrapable>
 {

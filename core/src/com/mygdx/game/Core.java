@@ -2,9 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-
 import core.GE;
 import core.system.input.InputSystem;
 import core.system.physic.PhysicSystem;

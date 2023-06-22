@@ -46,7 +46,7 @@ public class Target extends GameEntity implements IUpdateCallback
 
         active = true;
 
-        Core.physic().addContactLisener(new ContactListener() {
+        Core.physic().addContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
                 if(

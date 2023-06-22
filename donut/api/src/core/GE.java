@@ -3,14 +3,6 @@ package core;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import core.system.EntitySystemWrapper;
 import core.system.debug.DebugSystem;
 import core.system.destroy.EntityDestroySystem;
@@ -20,6 +12,11 @@ import core.system.physic.PhysicSystem;
 import core.system.render.RenderSystem;
 import utility.BaseWrapper;
 import utility.IWrapable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GE extends BaseWrapper<GE, GE.Wrappable>
 {
@@ -60,8 +57,6 @@ public class GE extends BaseWrapper<GE, GE.Wrappable>
         systemMapper.put(systemWrapper.getClass().toString(), systemWrapper);
         wrapable.addSystem(systemWrapper.wrapable);
     }
-
-
 
     public GE()
     {

@@ -1,12 +1,10 @@
 package core.system.render;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-
 import core.GameEntity;
 import core.system.EntitySystemWrapable;
 import core.system.EntitySystemWrapper;
