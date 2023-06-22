@@ -48,6 +48,6 @@ public class RenderSystem extends EntitySystemWrapper<RenderSystem> {
     {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        camera = new OrthographicCamera();
+        camera = new OrthographicCamera(320, 240);
     }
 }

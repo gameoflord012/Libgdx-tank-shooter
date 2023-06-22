@@ -105,6 +105,7 @@ public abstract class GameEntity extends BaseWrapper<GameEntity, GameEntity.Wrap
         if(component == null)
         {
             component = componentCreator.createDefault(getEngine().getSystem(componentCreator.getSystemClass()), this);
+            add(component);
         }
 
         return component;

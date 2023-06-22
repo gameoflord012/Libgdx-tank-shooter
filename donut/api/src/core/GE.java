@@ -66,8 +66,8 @@ public class GE extends BaseWrapper<GE, GE.Wrappable>
         addSystem(new PhysicSystem());
         addSystem(new EntityEventSystem());
         addSystem(new EntityDestroySystem());
-        addSystem(new DebugSystem());
         addSystem(new RenderSystem());
+        addSystem(new DebugSystem());
     }
 
     public void addEntity(GameEntity entity)
