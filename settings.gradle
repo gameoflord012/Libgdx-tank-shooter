@@ -1,4 +1,8 @@
 rootProject.name = 'TankShooter'
-include 'core'
-include 'desktop'
-include 'donut'
+
+include ':core'
+include ':desktop'
+
+include ':donut'
+include ':donut:api'
+include ':donut:editor'

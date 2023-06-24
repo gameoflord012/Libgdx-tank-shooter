@@ -17,9 +17,5 @@ dependencies {
     implementation rootProject.project('donut')
 }
 
-test {
-    useJUnitPlatform()
-}
-
 sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = ["src/"]
