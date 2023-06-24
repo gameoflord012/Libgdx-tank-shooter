@@ -17,10 +17,27 @@ dependencies {
 sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = ["editor/src"]
 
+project.ext.mainClassName = 'editor.core.DonutEditorLauncher'
+
 jar {
     manifest {
         attributes 'Implementation-Title': 'Gradle Quickstart',
                 'Implementation-Version': version,
-                'Main-Class': 'editor.core.DonutEditorLauncher'
+                'Main-Class': project.mainClassName
     }
+}
+
+task runEditor(dependsOn: classes, type: JavaExec) {
+    mainClass = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    ignoreExitValue = true
+}
+
+task debugEditor(dependsOn: classes, type: JavaExec) {
+    mainClass = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    ignoreExitValue = true
+    debug = true
 }
