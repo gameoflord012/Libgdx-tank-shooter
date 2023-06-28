@@ -17,5 +17,5 @@ dependencies {
     implementation rootProject.project('donut')
 }
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 sourceSets.main.java.srcDirs = ["src/"]

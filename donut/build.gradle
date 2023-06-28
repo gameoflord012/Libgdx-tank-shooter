@@ -14,8 +14,9 @@ dependencies {
     api rootProject.project(':donut:api')
 }
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 sourceSets.main.java.srcDirs = ["editor/src"]
+sourceSets.main.resources.srcDirs += ["editor/src/resources/"]
 
 project.ext.mainClassName = 'editor.core.DonutEditorLauncher'
 
@@ -27,9 +28,14 @@ jar {
     }
 }
 
+dependencies {
+    implementation 'info.picocli:picocli:4.7.4'
+}
+
 task runEditor(dependsOn: classes, type: JavaExec) {
     mainClass = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
+
     standardInput = System.in
     ignoreExitValue = true
 }
@@ -37,7 +43,9 @@ task runEditor(dependsOn: classes, type: JavaExec) {
 task debugEditor(dependsOn: classes, type: JavaExec) {
     mainClass = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
+
     standardInput = System.in
     ignoreExitValue = true
     debug = true
 }
+targetCompatibility = JavaVersion.VERSION_11
