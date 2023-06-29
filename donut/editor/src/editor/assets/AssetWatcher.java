@@ -1,4 +1,4 @@
-package editor.core;
+package editor.assets;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
-public class AssetManager implements Runnable {
+public class AssetWatcher implements Runnable {
     private volatile Map<WatchKey, Path> getDirectoryByKey = new HashMap<>();
     private volatile WatchService watcher;
 
@@ -25,7 +25,7 @@ public class AssetManager implements Runnable {
         }
     }
 
-    public AssetManager()
+    public AssetWatcher()
     {
         try {
             watcher = FileSystems.getDefault().newWatchService();

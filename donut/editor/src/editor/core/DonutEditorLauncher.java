@@ -1,6 +1,8 @@
 package editor.core;
 
-import editor.core.utils.Utils;
+import editor.assets.AssetWatcher;
+import editor.assets.AssetsBuilder;
+import editor.util.Util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.nio.file.Paths;
 public class DonutEditorLauncher {
     public static void main(String[] args)
     {
-        AssetManager assetManager = new AssetManager();
+        AssetWatcher assetManager = new AssetWatcher();
         Thread thread = new Thread(assetManager);
         thread.start();
 
@@ -20,12 +22,10 @@ public class DonutEditorLauncher {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         String header = null;
-        try {
-            header = Utils.getTextFileAsset(Utils.SHELL_HEADER_ASSET);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        header = Util.readeResourceContent(Util.SHELL_HEADER_ASSET);
         System.out.println(header);
+
+        new AssetsBuilder().test();
 
         while(true)
         {

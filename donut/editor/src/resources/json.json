@@ -1,0 +1,19 @@
+{
+  "packageName": "helloliettleshiet",
+  "root":
+  {
+    "name": "helloWorld",
+    "childNodes": [
+      {
+        "name": "child1",
+        "childNodes": [
+          {
+            "name": "child1",
+          }
+      },
+      {
+        "name": "child2"
+      }
+    ]
+  }
+}
