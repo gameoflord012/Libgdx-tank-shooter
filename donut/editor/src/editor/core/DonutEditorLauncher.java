@@ -5,9 +5,11 @@ import editor.assets.AssetsBuilder;
 import editor.util.Util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DonutEditorLauncher {
@@ -17,15 +19,17 @@ public class DonutEditorLauncher {
         Thread thread = new Thread(assetManager);
         thread.start();
 
-        assetManager.registerPath(Paths.get("/home/manh/Desktop/New Folder/"));
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         String header = null;
         header = Util.readeResourceContent(Util.SHELL_HEADER_ASSET);
         System.out.println(header);
 
-        new AssetsBuilder().test();
+        List<File> assets = new ArrayList<>();
+        assets.add(new File("/home/manh/Desktop/txt1.txt"));
+        assets.add(new File("/home/manh/Desktop/txt2.txt"));
+
+        new AssetsBuilder().buildAssets(assets);
 
         while(true)
         {

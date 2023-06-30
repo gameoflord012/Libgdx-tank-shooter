@@ -11,20 +11,19 @@ public class AssetWatcher implements Runnable {
     private volatile Map<WatchKey, Path> getDirectoryByKey = new HashMap<>();
     private volatile WatchService watcher;
 
-    public void registerPath(Path unregistedPath)
+    public void registerPath(Path path)
     {
         try {
-            WatchKey key = unregistedPath.register(watcher,
+            WatchKey watchKey = path.register(watcher,
                     ENTRY_CREATE,
                     ENTRY_DELETE,
                     ENTRY_MODIFY);
 
-            getDirectoryByKey.put(key, unregistedPath);
+            getDirectoryByKey.put(watchKey, path);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
     public AssetWatcher()
     {
         try {
@@ -33,7 +32,6 @@ public class AssetWatcher implements Runnable {
             throw new RuntimeException(e);
         }
     }
-
 
     @Override
     public void run()

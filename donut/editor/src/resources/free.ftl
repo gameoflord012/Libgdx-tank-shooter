@@ -1,18 +1,21 @@
-<#macro tree parent>
-    <#if parent.childNodes??>
-        <#list parent.childNodes as node>
-            public static class ${node.name}
+<#macro tree map>
+    <#list map?keys as key>
+        <#if map[key]?has_content>
+            public static class ${key}
             {
-                <@tree parent=node />
+                <@tree map[key] />
             }
-        </#list>
-    </#if>
+        <#else>
+            public static File ${key} = new File(map[key]);
+        </#if>
+    </#list>
 </#macro>
-package ${packageName}
+
+package ${package}
 
 public class Assets
 {
-    <@tree parent=root />
+    <@tree data />
 }
 
 

@@ -1,61 +1,64 @@
 package editor.assets;
 
 import com.google.gson.Gson;
-import editor.util.Util;
-import freemarker.ext.beans.BeansWrapper;
+import com.google.gson.JsonObject;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 
 public class AssetsBuilder
 {
-    private JSONObject loadJsonAssetModel()
+    public void buildAssets(List<File> assetFiles)
     {
-        return new JSONObject(Util.readeResourceContent("json.json"));
-    }
-    public void buildAssetPath(Path assetPath)
-    {
+        JSONObject jsonObject = new JSONObject();
 
-    }
+        jsonObject.put("data", new JSONObject());
+        jsonObject.put("package", "hokage");
 
-    public void test()
-    {
+        for(File asset : assetFiles)
+        {
+            String path = asset.getAbsolutePath();
 
-        Map<String, Object> data = new
-                Gson().fromJson(loadJsonAssetModel().toString(), Map.class);
+            path = "data" + path.replaceAll("[ ,.]", "_");
 
-        Configuration cfg = new Configuration();
+            String[] pathElements = path.split("[^a-z,A-Z,0-9,_]");
 
-        cfg.setClassForTemplateLoading(AssetsBuilder.class, "/");
+            JSONObject node = jsonObject;
 
-        BeansWrapper wrapper = new BeansWrapper();
-        wrapper.setExposureLevel(BeansWrapper.EXPOSE_ALL);
+            for(String element : pathElements)
+            {
+                if(!node.has(element))
+                {
+                    node.put(element, new JSONObject());
+                }
 
-        cfg.setObjectWrapper(wrapper);
-
-
-
-        Template template = null;
-        try {
-            template = cfg.getTemplate("free.ftl");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+                node = node.getJSONObject(element);
+            }
         }
 
-        Writer out = new OutputStreamWriter(System.out);
+        Map data = new Gson().fromJson(jsonObject.toString(), Map.class);
 
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
+        cfg.setClassForTemplateLoading(this.getClass(), "/");
+        cfg.setDefaultEncoding("UTF-8");
+
+        Template template;
         try {
+            Writer out = new OutputStreamWriter(System.out);
+
+            template = cfg.getTemplate("free.ftl");
             template.process(data, out);
-        } catch (TemplateException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+            out.flush();
+
+        } catch (IOException | TemplateException e) {
             throw new RuntimeException(e);
         }
     }
