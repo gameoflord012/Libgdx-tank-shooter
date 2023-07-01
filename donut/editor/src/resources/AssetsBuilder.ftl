@@ -1,19 +1,21 @@
 <#macro tree map>
     <#list map?keys as key>
-        <#if map[key]?has_content>
+        <#if map[key]?is_string>
+            public static File ${key} = new File("${map[key]}");
+        <#else>
             public static class ${key}
             {
                 <@tree map[key] />
             }
-        <#else>
-            public static File ${key} = new File(map[key]);
         </#if>
     </#list>
 </#macro>
 
-package ${package}
+package ${packageName};
 
-public class Assets
+import java.io.File;
+
+public class ${className}
 {
     <@tree data />
 }

@@ -1,25 +1,30 @@
 package editor.assets;
 
+import editor.util.Serializable;
+
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
-public class AssetWatcher implements Runnable {
+public class AssetWatcher implements Runnable, Serializable {
     private volatile Map<WatchKey, Path> getDirectoryByKey = new HashMap<>();
     private volatile WatchService watcher;
+    private List<Path> registedPaths = new ArrayList<>();
 
     public void registerPath(Path path)
     {
         try {
             WatchKey watchKey = path.register(watcher,
                     ENTRY_CREATE,
-                    ENTRY_DELETE,
-                    ENTRY_MODIFY);
+                    ENTRY_DELETE);
 
             getDirectoryByKey.put(watchKey, path);
+            registedPaths.add(path);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -32,7 +37,6 @@ public class AssetWatcher implements Runnable {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void run()
     {
@@ -75,5 +79,21 @@ public class AssetWatcher implements Runnable {
                 break;
             }
         }
+    }
+
+    @Override
+    public void writeObject(Map<String, Object> map) {
+        registedPaths = (List<Path>)map.get("registedPaths");
+        for(Path registedPath : registedPaths)
+        {
+            registerPath(registedPath);
+        }
+    }
+
+    @Override
+    public Map<String, Object> readObject() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("registedPaths", registedPaths);
+        return map;
     }
 }

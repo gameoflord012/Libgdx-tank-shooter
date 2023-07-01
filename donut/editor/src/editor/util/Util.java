@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class Util {
-    public static final String SHELL_HEADER_ASSET = "header.txt";
-
     public static String readeResourceContent(String resourceName) {
         InputStream in = getResourceInputStream(resourceName);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));

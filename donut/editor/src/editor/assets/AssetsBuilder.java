@@ -7,22 +7,25 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
 public class AssetsBuilder
 {
+    private JSONObject dataModel;
+    private File output;
+    public AssetsBuilder(String packageName, String className, File out)
+    {
+        JSONObject dataModel = new JSONObject();
+
+        dataModel.put("data", new JSONObject());
+        dataModel.put("packageName", packageName);
+        dataModel.put("className", className);
+    }
+
     public void buildAssets(List<File> assetFiles)
     {
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("data", new JSONObject());
-        jsonObject.put("package", "hokage");
-
         for(File asset : assetFiles)
         {
             String path = asset.getAbsolutePath();
@@ -31,10 +34,12 @@ public class AssetsBuilder
 
             String[] pathElements = path.split("[^a-z,A-Z,0-9,_]");
 
-            JSONObject node = jsonObject;
+            JSONObject node = dataModel;
 
-            for(String element : pathElements)
+            for(int i = 0; i < pathElements.length - 1; i++)
             {
+                String element = pathElements[i];
+
                 if(!node.has(element))
                 {
                     node.put(element, new JSONObject());
@@ -42,9 +47,11 @@ public class AssetsBuilder
 
                 node = node.getJSONObject(element);
             }
+
+            node.put(pathElements[pathElements.length - 1], asset.getAbsolutePath());
         }
 
-        Map data = new Gson().fromJson(jsonObject.toString(), Map.class);
+        Map data = new Gson().fromJson(dataModel.toString(), Map.class);
 
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
         cfg.setClassForTemplateLoading(this.getClass(), "/");
@@ -52,9 +59,9 @@ public class AssetsBuilder
 
         Template template;
         try {
-            Writer out = new OutputStreamWriter(System.out);
+            Writer out = new OutputStreamWriter(new FileOutputStream(output));
 
-            template = cfg.getTemplate("free.ftl");
+            template = cfg.getTemplate("AssetsBuilder.ftl");
             template.process(data, out);
             out.flush();
 
