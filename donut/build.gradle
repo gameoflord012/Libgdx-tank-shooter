@@ -16,10 +16,12 @@ dependencies {
 
 sourceCompatibility = 11
 sourceSets.main.java.srcDirs = ["editor/src/main"]
-sourceSets.test.java.srcDirs = ["editor/src/test"]
-sourceSets.main.resources.srcDirs += ["editor/src/resources"]
+sourceSets.main.resources.srcDirs += ["editor/resources/test"]
 
-project.ext.mainClassName = 'editor.core.DonutEditorLauncher'
+sourceSets.test.java.srcDirs = ["editor/src/test"]
+sourceSets.main.resources.srcDirs += ["editor/resources/main"]
+
+project.ext.mainClassName = 'donut.editor.core.DonutEditorLauncher'
 
 jar {
     manifest {

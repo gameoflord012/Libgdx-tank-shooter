@@ -16,7 +16,7 @@ public class DonutConsole implements Runnable {
     @Override
     public void run() {
         String header = null;
-        header = Util.readeResourceContent("header.txt");
+        header = Util.getResourceContent("header.txt");
 
         System.out.println(header);
         System.out.print(">");

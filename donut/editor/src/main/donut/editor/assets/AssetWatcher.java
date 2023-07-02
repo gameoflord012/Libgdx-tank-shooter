@@ -14,7 +14,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
 public class AssetWatcher implements Runnable, Serializable {
     private volatile Map<WatchKey, Path> getDirectoryByKey = new HashMap<>();
     private volatile WatchService watcher;
-    private List<Path> registedPaths = new ArrayList<>();
+    public List<Path> registedPaths = new ArrayList<>();
 
     public void registerPath(Path path)
     {

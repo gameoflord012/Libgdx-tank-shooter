@@ -6,9 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class Util {
-    public static String readeResourceContent(String resourceName) {
-        InputStream in = getResourceInputStream(resourceName);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    public static String getResourceContent(String resourceName) {
+        BufferedReader br = getResourceBufferedReader(getResourceInputStream(resourceName));
 
         StringBuilder sb = new StringBuilder();
         String line;
@@ -28,5 +27,15 @@ public class Util {
     public static InputStream getResourceInputStream(String resourceName)
     {
         return Util.class.getClassLoader().getResourceAsStream(resourceName);
+    }
+
+    public static BufferedReader getResourceBufferedReader(InputStream is)
+    {
+        return new BufferedReader(new InputStreamReader(is));
+    }
+
+    public static BufferedReader getResourceBufferedReader(String resourceName)
+    {
+        return getResourceBufferedReader(getResourceInputStream(resourceName));
     }
 }
