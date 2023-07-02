@@ -3,7 +3,9 @@ import com.google.gson.reflect.TypeToken;
 import donut.editor.assets.AssetWatcher;
 import donut.editor.util.Util;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,6 +13,9 @@ import java.io.IOException;
 import java.util.Map;
 
 public class Assets {
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
     @Test
     public void AssetWatcherSerialization() throws IOException {
         AssetWatcher assetWatcher = new AssetWatcher();
@@ -31,5 +36,29 @@ public class Assets {
         Assert.assertEquals(
                 Util.getResourceContent("AssetWatcherSerialization.o").replaceAll("[\n, ]", ""),
                 serializedOutput.replaceAll("[\n, ]", ""));
+    }
+
+    @Test
+    public void AssetWatcherEventListener() throws InterruptedException, IOException {
+        AssetWatcher assetWatcher = new AssetWatcher();
+        File dir = folder.newFolder("AssetWatcherEventListener/");
+
+        assetWatcher.registerWatchFile(dir);
+
+        Thread thread = new Thread(assetWatcher);
+        thread.start();
+
+        assetWatcher.eventListeners.add(new AssetWatcher.EventListener()
+        {
+            @Override
+            protected void onWatchFileModified(AssetWatcher.EventType eventType, File modifiedFile) {
+                Assert.assertEquals("FILE_CREATED", eventType.name());
+                Assert.assertEquals("hello.txt", modifiedFile.getName());
+                thread.interrupt();
+            }
+        });
+
+        folder.newFile("AssetWatcherEventListener/hello.txt");
+        thread.join();
     }
 }
