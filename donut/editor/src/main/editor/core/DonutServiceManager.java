@@ -9,7 +9,7 @@ public class DonutServiceManager {
     public void addService(Runnable service)
     {
         threadMap.put(service, new Thread(service));
-    };
+    }
 
     public void startServices()
     {
