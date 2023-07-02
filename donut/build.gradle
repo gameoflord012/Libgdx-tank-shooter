@@ -16,10 +16,13 @@ dependencies {
 }
 
 sourceCompatibility = 11
-sourceSets.main.java.srcDirs = ["editor/src"]
-sourceSets.main.resources.srcDirs += ["editor/src/resources/"]
+sourceSets.main.java.srcDirs = ["editor/src/main"]
+sourceSets.main.resources.srcDirs += ["editor/resources/test"]
 
-project.ext.mainClassName = 'editor.core.DonutEditorLauncher'
+sourceSets.test.java.srcDirs = ["editor/src/test"]
+sourceSets.main.resources.srcDirs += ["editor/resources/main"]
+
+project.ext.mainClassName = 'donut.editor.core.DonutEditorLauncher'
 
 jar {
     manifest {
@@ -30,7 +33,11 @@ jar {
 }
 
 dependencies {
-    implementation 'info.picocli:picocli:4.7.4'
+    implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.32'
+    implementation group: 'org.json', name: 'json', version: '20230618'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
+
+    testImplementation('junit:junit:4.13.1')
 }
 
 task runEditor(dependsOn: classes, type: JavaExec) {
@@ -49,4 +56,5 @@ task debugEditor(dependsOn: classes, type: JavaExec) {
     ignoreExitValue = true
     debug = true
 }
+
 targetCompatibility = JavaVersion.VERSION_11

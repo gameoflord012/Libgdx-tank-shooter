@@ -6,10 +6,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.Core;
 
-import core.GameEntity;
-import core.system.event.EntityCallbackReceiver;
-import core.system.event.IUpdateCallback;
-import core.system.physic.PhysicBody;
+import donut.api.core.GameEntity;
+import donut.api.core.system.event.EntityCallbackReceiver;
+import donut.api.core.system.event.IUpdateCallback;
+import donut.api.core.system.physic.PhysicBody;
 
 public class Bullet extends GameEntity implements IUpdateCallback
 {
