@@ -1,5 +1,10 @@
 package donut.editor.util;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,5 +42,12 @@ public class Util {
     public static BufferedReader getResourceBufferedReader(String resourceName)
     {
         return getResourceBufferedReader(getResourceInputStream(resourceName));
+    }
+
+    public static String makeJsonPretty(String uglyJson)
+    {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonElement je = JsonParser.parseString(uglyJson);
+        return gson.toJson(je);
     }
 }

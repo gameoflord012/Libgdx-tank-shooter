@@ -2,6 +2,7 @@ package donut.editor.assets;
 
 import donut.editor.util.Serializable;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -14,17 +15,18 @@ import static java.nio.file.StandardWatchEventKinds.*;
 public class AssetWatcher implements Runnable, Serializable {
     private volatile Map<WatchKey, Path> getDirectoryByKey = new HashMap<>();
     private volatile WatchService watcher;
-    public List<Path> registedPaths = new ArrayList<>();
+    private List<File> registeredWatchFiles = new ArrayList<>();
 
-    public void registerPath(Path path)
+    public void registerWatchFile(File file)
     {
         try {
+            Path path = file.toPath();
             WatchKey watchKey = path.register(watcher,
                     ENTRY_CREATE,
                     ENTRY_DELETE);
 
             getDirectoryByKey.put(watchKey, path);
-            registedPaths.add(path);
+            registeredWatchFiles.add(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -83,17 +85,17 @@ public class AssetWatcher implements Runnable, Serializable {
 
     @Override
     public void writeObject(Map<String, Object> map) {
-        registedPaths = (List<Path>)map.get("registedPaths");
-        for(Path registedPath : registedPaths)
+        registeredWatchFiles = (List<File>)map.get("registeredWatchFiles");
+        for(File file : registeredWatchFiles)
         {
-            registerPath(registedPath);
+            registerWatchFile(file);
         }
     }
 
     @Override
     public Map<String, Object> readObject() {
         Map<String, Object> map = new HashMap<>();
-        map.put("registedPaths", registedPaths);
+        map.put("registeredWatchFiles", registeredWatchFiles);
         return map;
     }
 }
