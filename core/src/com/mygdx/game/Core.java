@@ -3,9 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import core.GE;
-import core.system.input.InputSystem;
-import core.system.physic.PhysicSystem;
+import donut.api.core.GE;
+import donut.api.core.system.input.InputSystem;
+import donut.api.core.system.physic.PhysicSystem;
 
 public class Core extends Game {
 	public static final float SCREEN_WIDTH = 320f, SCREEN_HEIGHT = 240f;

@@ -11,7 +11,7 @@ import com.mygdx.game.entities.Tank;
 import com.mygdx.game.entities.target.TargetPoolFactory;
 import com.mygdx.game.entities.target.TargetPoolObject;
 
-import utility.Utility;
+import donut.api.utility.Utility;
 
 public class GameScreen extends ScreenAdapter {
     private Core game;
