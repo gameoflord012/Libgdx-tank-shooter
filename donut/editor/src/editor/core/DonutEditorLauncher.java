@@ -1,6 +1,9 @@
 package editor.core;
 
+import editor.core.cli.CLI;
+import editor.core.command.AddAssetDirectoryCommand;
 import editor.core.utils.Utils;
+import picocli.CommandLine;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +18,7 @@ public class DonutEditorLauncher {
         Thread thread = new Thread(assetManager);
         thread.start();
 
-        assetManager.registerPath(Paths.get("/home/manh/Desktop/New Folder/"));
+//        assetManager.registerPath(Paths.get("/home/manh/Desktop/New Folder/"));
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -27,6 +30,10 @@ public class DonutEditorLauncher {
         }
         System.out.println(header);
 
+        AddAssetDirectoryCommand addAssetDirectoryCommand = new AddAssetDirectoryCommand(assetManager);
+        CommandLine cmd = new CommandLine(addAssetDirectoryCommand);
+        cmd.execute("something 1");
+        System.out.println(cmd.getCommandName());
         while(true)
         {
             String input;
@@ -37,6 +44,8 @@ public class DonutEditorLauncher {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+
         }
     }
 }

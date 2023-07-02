@@ -10,7 +10,8 @@ public class AddAssetDirectoryCommand implements Runnable {
     private AssetManager assetManager;
 
     @CommandLine.Parameters(index = "0")
-    private Path path;
+    public String arg = "con cac";
+//    private Path path;
     public AddAssetDirectoryCommand(AssetManager assetManager)
     {
         this.assetManager = assetManager;
@@ -18,7 +19,7 @@ public class AddAssetDirectoryCommand implements Runnable {
 
     @Override
     public void run() {
-        assetManager.registerPath(path);
-        System.out.println("Command ran");
+//        assetManager.registerPath(path);
+        System.out.println(arg);
     }
 }

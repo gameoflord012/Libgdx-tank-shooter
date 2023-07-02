@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     api rootProject.project(':donut:api')
+    implementation group: 'commons-cli', name: 'commons-cli', version: '1.5.0'
 }
 
 sourceCompatibility = 11
