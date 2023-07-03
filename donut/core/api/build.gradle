@@ -12,8 +12,8 @@ repositories {
 
 dependencies {
     implementation "com.badlogicgames.ashley:ashley:1.7.3"
-    api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+    api "com.badlogicgames.gdx:gdx-box2d:1.11.0"
+    api "com.badlogicgames.gdx:gdx:1.11.0"
 }
 
 sourceCompatibility = 1.8
