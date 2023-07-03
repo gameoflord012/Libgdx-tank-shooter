@@ -23,17 +23,20 @@ public class Assets {
         BufferedReader br = Util.getResourceBufferedReader("AssetWatcherSerialization.i");
 
 
-        assetWatcher.registerWatchFile(folder.newFile("AssetWatcherSerialization/text1.txt"));
-        assetWatcher.registerWatchFile(folder.newFile("AssetWatcherSerialization/text2.txt"));
-        assetWatcher.registerWatchFile(folder.newFile("AssetWatcherSerialization2/text1.txt"));
+        assetWatcher.registerWatchFile(folder.newFolder("AssetWatcherSerialization/"));
+        assetWatcher.registerWatchFile(folder.newFolder("AssetWatcherSerialization2/"));
+
+        folder.newFile("AssetWatcherSerialization/text1.txt");
+        folder.newFile("AssetWatcherSerialization/text2.txt");
+        folder.newFile("AssetWatcherSerialization2/text1.txt");
 
         Gson gson = new Gson();
         String serializedOutput = gson.toJson(assetWatcher.readObject(), TypeToken.getParameterized(Map.class, String.class, Object.class).getType());
         serializedOutput = Util.makeJsonPretty(serializedOutput);
 
         Assert.assertEquals(
-                Util.getResourceContent("AssetWatcherSerialization.o").replaceAll("[\n, ]", ""),
-                serializedOutput.replaceAll("[\n, ]", ""));
+                Util.getResourceContent("AssetWatcherSerialization.o").replaceAll("[\n ]", ""),
+                serializedOutput.replaceAll("(\n| |junit\\d+)", ""));
     }
 
     @Test

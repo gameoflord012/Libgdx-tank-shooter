@@ -1,10 +1,1 @@
-{
-  "registeredWatchFiles": [
-    {
-      "path": "/home/manh/Desktop/New Folder"
-    },
-    {
-      "path": "/home/manh/Desktop/New Folder/child1"
-    }
-  ]
-}
+{"registeredWatchFiles":[{"path":"/tmp//AssetWatcherSerialization"},{"path":"/tmp//AssetWatcherSerialization2"}]}
