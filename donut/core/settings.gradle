@@ -1,2 +1,0 @@
-include ':donut:core:api'
-include ':donut:core:editor'

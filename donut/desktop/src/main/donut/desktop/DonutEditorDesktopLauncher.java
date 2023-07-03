@@ -1,10 +1,9 @@
-package donut.core.editor;
+package donut.desktop;
 
-
-import donut.core.editor.service.DonutServiceManager;
 import donut.core.editor.service.DonutConsole;
+import donut.core.editor.service.DonutServiceManager;
 
-public class DonutEditorLauncher {
+public class DonutEditorDesktopLauncher {
     public static void main(String[] args)
     {
         DonutServiceManager serviceManager = new DonutServiceManager();
