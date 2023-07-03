@@ -22,12 +22,10 @@ public class Assets {
 
         BufferedReader br = Util.getResourceBufferedReader("AssetWatcherSerialization.i");
 
-        while(true)
-        {
-            String line = br.readLine();
-            if(line == null) break;
-            assetWatcher.registerWatchFile(new File(line));
-        }
+
+        assetWatcher.registerWatchFile(folder.newFile("AssetWatcherSerialization/text1.txt"));
+        assetWatcher.registerWatchFile(folder.newFile("AssetWatcherSerialization/text2.txt"));
+        assetWatcher.registerWatchFile(folder.newFile("AssetWatcherSerialization2/text1.txt"));
 
         Gson gson = new Gson();
         String serializedOutput = gson.toJson(assetWatcher.readObject(), TypeToken.getParameterized(Map.class, String.class, Object.class).getType());

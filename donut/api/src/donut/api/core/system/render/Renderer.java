@@ -21,7 +21,6 @@ public class Renderer extends ComponentWrapper<Renderer> {
 
     private final Set<IRenderCallback> renderLiseners = new HashSet<>();
 
-
     public void addRenderCallback(IRenderCallback renderCallback)
     {
         renderLiseners.add(renderCallback);
