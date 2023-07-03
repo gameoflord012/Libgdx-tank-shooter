@@ -17,7 +17,7 @@ sourceSets.main.resources.srcDirs += ["resources/main/"]
 sourceSets.test.java.srcDirs = ["src/test"]
 sourceSets.test.resources.srcDirs += ["resources/test/"]
 
-project.ext.mainClassName = 'donut.core.editor.core.DonutEditorLauncher'
+project.ext.mainClassName = 'donut.core.editor.DonutEditorLauncher'
 
 jar {
     manifest {

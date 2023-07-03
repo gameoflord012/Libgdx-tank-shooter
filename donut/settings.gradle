@@ -1,2 +1,5 @@
-include 'api'
-include'editor'
+include ':donut:core:api'
+include ':donut:core:editor'
+
+include ':donut:desktop'
+include ':donut:web'
