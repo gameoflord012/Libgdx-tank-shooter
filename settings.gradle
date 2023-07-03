@@ -4,5 +4,7 @@ include ':core'
 include ':desktop'
 
 include ':donut'
+
+include ':donut:core'
 include ':donut:core:api'
 include ':donut:core:editor'

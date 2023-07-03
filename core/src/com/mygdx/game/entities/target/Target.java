@@ -13,9 +13,9 @@ import com.mygdx.game.Core;
 import java.util.HashSet;
 import java.util.Set;
 
-import donut.api.core.GameEntity;
-import donut.api.core.system.event.EntityCallbackReceiver;
-import donut.api.core.system.event.IUpdateCallback;
+import donut.core.api.GameEntity;
+import donut.core.api.system.event.EntityCallbackReceiver;
+import donut.core.api.system.event.IUpdateCallback;
 
 public class Target extends GameEntity implements IUpdateCallback
 {

@@ -7,11 +7,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.Core;
 
-import donut.api.core.GameEntity;
-import donut.api.core.system.debug.Debugger;
-import donut.api.core.system.event.EntityCallbackReceiver;
-import donut.api.core.system.event.IUpdateCallback;
-import donut.api.core.system.physic.PhysicBody;
+import donut.core.api.GameEntity;
+import donut.core.api.system.debug.Debugger;
+import donut.core.api.system.event.EntityCallbackReceiver;
+import donut.core.api.system.event.IUpdateCallback;
+import donut.core.api.system.physic.PhysicBody;
 
 public class Tank extends GameEntity implements IUpdateCallback
 {
